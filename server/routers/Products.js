@@ -1,7 +1,10 @@
 const router = require("express").Router();
+const {
+  getallProducts,
+  createProduct,
+} = require("../controller/productController");
 
-router.get("/", (req, res) => {
-  res.send({ Message: "This is products router" });
-});
+router.get("/", getallProducts);
+router.post("/", createProduct);
 
 module.exports = router;
