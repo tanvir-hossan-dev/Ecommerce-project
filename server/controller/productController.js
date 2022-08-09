@@ -1,11 +1,9 @@
 const Product = require("../models/Products");
 
 const createProduct = async (req, res) => {
-  const body = req.body;
-  console.log(body);
   try {
-    const create = await Product(body).save();
-
+    const create = new Product(req.body);
+    await create.save();
     res.status(200).json({ message: "Product create successful", create });
   } catch (err) {
     console.log(err);
@@ -45,9 +43,23 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const getSingleProduct = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      res.status(500).json({ Message: "Product not found" });
+    }
+    res.status(201).json({ Message: "get single product", product });
+  } catch {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getallProducts,
   createProduct,
   updateProduct,
   deleteProduct,
+  getSingleProduct,
 };
