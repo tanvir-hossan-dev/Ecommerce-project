@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     default: true,
-    select: false,
+    minLength: 8,
   },
   avatar: {
     public_id: {
