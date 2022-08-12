@@ -9,7 +9,6 @@ const Authenticate = async (req, res, next) => {
     }
     const decoded = jwt.verify(token, process.env.SECRETKEY);
     const decodedEmail = decoded.email;
-    console.log(decodedEmail);
     const user = await User.findOne({ decodedEmail });
     if (!user) {
       return res.status(404).json({ Message: "Invalid token" });
