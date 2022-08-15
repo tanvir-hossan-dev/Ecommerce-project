@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ Message: "User not found" });
     }
@@ -49,8 +49,9 @@ exports.login = async (req, res) => {
     };
 
     const token = jwt.sign(userToken, process.env.SECRETKEY);
+    user._doc.token = token;
 
-    res.status(201).json({ Message: "Login successful", user, token });
+    res.status(201).json({ Message: "Login successful", user });
   } catch (err) {
     console.log(err);
   }
