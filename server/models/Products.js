@@ -1,18 +1,5 @@
 const mongoose = require("mongoose");
 
-/**
- * name
- * description
- * price
- * rating
- * images, public_id, url
- * category
- * stock
- * numberofReviews
- * revies, name, rating, comment
- * createdAt
- */
-
 const productSchema = mongoose.Schema({
   name: {
     type: String,
