@@ -13,6 +13,7 @@ const Authenticate = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ Message: "Invalid token" });
     }
+    req.user = user;
     next();
   } catch (err) {
     res.status(404).json({ Message: "Invalid token" });

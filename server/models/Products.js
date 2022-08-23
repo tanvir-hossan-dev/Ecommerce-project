@@ -35,7 +35,6 @@ const productSchema = mongoose.Schema({
   },
   stock: {
     type: String,
-    required: true,
     default: 1,
   },
   numberofReviews: {
@@ -55,7 +54,7 @@ const productSchema = mongoose.Schema({
       },
     },
   ],
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
