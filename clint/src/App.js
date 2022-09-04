@@ -1,8 +1,12 @@
+import Navbar from "./components/navbar/Navbar";
+import Product from "./components/products/product/Product";
+
 function App() {
   return (
-    <div className="App">
-      <h1>This is home page</h1>
-    </div>
+    <>
+      <Navbar />
+      <Product />
+    </>
   );
 }
 
