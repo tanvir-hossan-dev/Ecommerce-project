@@ -1,16 +1,24 @@
 import React from "react";
+import iceCream from "../../../assets/images/icecream.png";
 
 const Product = () => {
   return (
-    <>
-      <div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, facere! Lorem, ipsum dolor sit amet consectetur
-          adipisicing elit. Exercitationem, quidem. Aliquid impedit voluptatum beatae ipsum tempore doloribus nesciunt
-          amet? Dolorem?
-        </p>
+    <div className="p-6 bg-white shadow-md shadow-gray rounded-xl">
+      <img src={iceCream} alt="" />
+      <h3 className=" font-sans text-2xl pt-6">Title</h3>
+      <h3 className=" font-sans text-2xl py-2">amount</h3>
+      <div className="flex justify-between">
+        <div className="flex py-2 px-4 border-2 border-solid rounded-3xl w-28 justify-between">
+          <button className=" text-2xl ">-</button>
+          <h4 className=" text-2xl">1</h4>
+          <button className="text-2xl">+</button>
+        </div>
+        <button>
+          {/* <img src="" alt="" /> */}
+          add to cart icon
+        </button>
       </div>
-    </>
+    </div>
   );
 };
 
