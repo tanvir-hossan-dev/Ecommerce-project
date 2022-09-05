@@ -3,8 +3,12 @@ import React from "react";
 const Product = () => {
   return (
     <>
-      <div className="container_bg ">
-        <div className="grid grid-cols-4 gap-4"></div>
+      <div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, facere! Lorem, ipsum dolor sit amet consectetur
+          adipisicing elit. Exercitationem, quidem. Aliquid impedit voluptatum beatae ipsum tempore doloribus nesciunt
+          amet? Dolorem?
+        </p>
       </div>
     </>
   );

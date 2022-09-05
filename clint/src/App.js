@@ -1,11 +1,11 @@
 import Navbar from "./components/navbar/Navbar";
-import Product from "./components/products/product/Product";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Product />
+      <Home />
     </>
   );
 }
