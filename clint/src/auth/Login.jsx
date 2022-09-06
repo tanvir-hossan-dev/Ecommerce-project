@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Input from "./Input";
 import Submitbtn from "./Submitbtn";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../Redux/features/User/userSlice";
+import { LoginUser } from "../Redux/features/User/userSlice";
 
 const initialState = {
   email: "",
@@ -14,6 +14,7 @@ const initialState = {
 const Login = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  console.log(user);
   const [inputs, setInputs] = useState(initialState);
 
   const handleOnChange = (e) => {
@@ -26,7 +27,8 @@ const Login = () => {
   const handleSubmit = (e) => {
     const { email, password } = inputs;
     e.preventDefault();
-    dispatch(fetchUser({ email, password }));
+    dispatch(LoginUser({ email, password }));
+    setInputs(initialState);
   };
 
   return (
