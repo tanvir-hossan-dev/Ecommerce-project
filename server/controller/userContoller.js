@@ -6,9 +6,7 @@ exports.register = async (req, res) => {
   const { name, email, password } = req.body;
   try {
     if (!name || !email || !password) {
-      return res
-        .status(400)
-        .json({ Message: "Please provide your all information" });
+      return res.status(400).json({ Message: "Please provide your all information" });
     }
     const userEmail = await User.findOne({ email });
     if (userEmail) {
@@ -32,6 +30,7 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
   try {
     let user = await User.findOne({ email });
     if (!user) {
