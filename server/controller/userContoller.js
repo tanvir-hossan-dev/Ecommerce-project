@@ -10,7 +10,7 @@ exports.register = async (req, res) => {
     }
     const userEmail = await User.findOne({ email });
     if (userEmail) {
-      res.status(400).json({ Message: "This email already in use" });
+      return res.status(400).json({ Message: "This email already in use" });
     }
     let user = new User({
       name,

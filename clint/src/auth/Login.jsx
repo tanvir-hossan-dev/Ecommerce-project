@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import Submitbtn from "./Submitbtn";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,8 +14,8 @@ const initialState = {
 const Login = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  console.log(user);
   const [inputs, setInputs] = useState(initialState);
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     setInputs({
@@ -29,6 +29,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }));
     setInputs(initialState);
+    navigate("/");
   };
 
   return (

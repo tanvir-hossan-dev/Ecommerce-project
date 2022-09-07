@@ -4,7 +4,7 @@ import { signIn, signUp } from "./userApi";
 const initialState = {
   isLoading: false,
   error: "",
-  user: {},
+  user: JSON.parse(localStorage.getItem("user")) || {},
 };
 
 const LoginUser = createAsyncThunk("user/loginUser", async ({ email, password }) => {
@@ -20,6 +20,11 @@ const regiserUser = createAsyncThunk("user/registerUser", async ({ name, email, 
 const userSlice = createSlice({
   name: "user",
   initialState,
+  reducers: {
+    signOut: (state) => {
+      state.user = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(LoginUser.pending, (state) => {
@@ -39,9 +44,11 @@ const userSlice = createSlice({
         state.error = "";
       })
       .addCase(regiserUser.fulfilled, (state, action) => {
+        console.log(action);
         state.isLoading = false;
       })
       .addCase(regiserUser.rejected, (state, action) => {
+        console.log(action);
         state.isLoading = false;
         state.error = action.error.message;
         state.user = {};
