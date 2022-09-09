@@ -4,15 +4,16 @@ import logo from "../../assets/images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { userSlice } from "../../Redux/features/User/userSlice";
+import { logoutUser } from "../../Redux/features/User/userSlice";
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSignOut = () => {
-    dispatch(userSlice.actions.signOut());
+  const handleSignOut = (e) => {
+    e.preventDefault();
+    dispatch(logoutUser());
     localStorage.removeItem("user");
     navigate("/auth/login");
   };

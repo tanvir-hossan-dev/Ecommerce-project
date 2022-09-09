@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { signIn, signUp } from "./userApi";
+import { signIn, signOut, signUp } from "./userApi";
 
 const initialState = {
   isLoading: false,
@@ -17,14 +17,14 @@ const regiserUser = createAsyncThunk("user/registerUser", async ({ name, email, 
   return regiser;
 });
 
+const logoutUser = createAsyncThunk("user/logoutUser", async () => {
+  const logout = await signOut();
+  return logout;
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    signOut: (state) => {
-      state.user = {};
-    },
-  },
   extraReducers: (builder) => {
     builder
       .addCase(LoginUser.pending, (state) => {
@@ -48,6 +48,19 @@ const userSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(regiserUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+        state.user = {};
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = "";
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
         console.log(action);
         state.isLoading = false;
         state.error = action.error.message;
@@ -56,4 +69,4 @@ const userSlice = createSlice({
   },
 });
 
-export { userSlice, LoginUser, regiserUser };
+export { userSlice, LoginUser, regiserUser, logoutUser };

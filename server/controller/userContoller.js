@@ -54,3 +54,7 @@ exports.login = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.logOut = async (req, res) => {
+  res.status(200).json({ Message: "Log Out Successful" });
+};
