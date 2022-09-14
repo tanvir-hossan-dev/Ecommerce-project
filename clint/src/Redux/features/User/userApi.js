@@ -1,10 +1,12 @@
 import axios from "axios";
 
 const signIn = async (email, password) => {
-  const { data } = await axios.post("http://localhost:4000/api/v1/auth/login", { email, password });
+  const signin = await axios.post("http://localhost:4000/api/v1/auth/login", { email, password });
 
-  localStorage.setItem("user", JSON.stringify(data));
-  return data;
+  console.log(signin);
+
+  localStorage.setItem("user", JSON.stringify(signin.data));
+  return signin.data;
 };
 
 const signUp = async (name, email, password) => {

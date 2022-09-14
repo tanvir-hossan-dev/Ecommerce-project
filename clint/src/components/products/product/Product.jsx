@@ -9,7 +9,9 @@ const Product = ({ product }) => {
       <Link to={`/productdeatils/${_id}`}>
         <img src={iceCream} alt="" />
       </Link>
-      <h3 className=" font-sans text-2xl pt-6">{name}</h3>
+      <h3 className=" font-sans text-2xl pt-6 ">
+        <Link to={`/productdeatils/${_id}`}>{name}</Link>
+      </h3>
       <h3 className=" font-sans text-2xl py-2">{price}</h3>
       <div className="flex justify-between">
         <div className="flex py-2 px-4 border-2 border-solid rounded-3xl w-28 justify-between">

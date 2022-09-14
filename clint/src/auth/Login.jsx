@@ -13,9 +13,10 @@ const initialState = {
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user, error, isSuccess, isError } = useSelector((state) => state.user);
   const [inputs, setInputs] = useState(initialState);
   const navigate = useNavigate();
+  console.log(error);
 
   const handleOnChange = (e) => {
     setInputs({
@@ -27,9 +28,9 @@ const Login = () => {
   const handleSubmit = (e) => {
     const { email, password } = inputs;
     e.preventDefault();
-    dispatch(LoginUser({ email, password }));
     setInputs(initialState);
-    navigate("/");
+    dispatch(LoginUser({ email, password }));
+    if (isSuccess && !isError) navigate("/");
   };
 
   return (

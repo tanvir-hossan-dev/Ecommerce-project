@@ -3,7 +3,9 @@ import { signIn, signOut, signUp } from "./userApi";
 
 const initialState = {
   isLoading: false,
-  error: "",
+  isSuccess: false,
+  isError: false,
+  error: undefined,
   user: JSON.parse(localStorage.getItem("user")) || {},
 };
 
@@ -29,14 +31,19 @@ const userSlice = createSlice({
     builder
       .addCase(LoginUser.pending, (state) => {
         state.isLoading = true;
+        state.isSuccess = false;
         state.error = "";
       })
       .addCase(LoginUser.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.user = action.payload;
+        state.isLoading = false;
+        state.isSuccess = true;
       })
       .addCase(LoginUser.rejected, (state, action) => {
+        console.log(action);
         state.error = action.error.message;
+        state.isSuccess = false;
+        state.isError = true;
         state.user = {};
       })
       .addCase(regiserUser.pending, (state) => {
