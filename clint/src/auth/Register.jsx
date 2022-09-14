@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { regiserUser } from "../Redux/features/User/userSlice";
+import { Link, useNavigate } from "react-router-dom";
+import Error from "../components/Error/Error";
+import { useRegisterMutation } from "../Redux/features/auth/authApi";
 import Input from "./Input";
 import Submitbtn from "./Submitbtn";
 
@@ -10,11 +10,14 @@ const initialState = {
   name: "",
   email: "",
   password: "",
+  confirmPassword: "",
 };
 
 const Register = () => {
-  const dispatch = useDispatch();
+  const [register, { isLoading, isSuccess, error, isError }] = useRegisterMutation();
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState(initialState);
+  const [err, setErr] = useState("");
 
   const handleOnChange = (e) => {
     setInputs({
@@ -24,11 +27,21 @@ const Register = () => {
   };
 
   const handleSubmit = (e) => {
-    const { name, email, password } = inputs;
     e.preventDefault();
-    dispatch(regiserUser({ name, email, password }));
-    setInputs(initialState);
+    const { name, email, password, confirmPassword } = inputs;
+    if (password !== confirmPassword) {
+      return setErr("Confirm password din not match");
+    } else {
+      register({ name, email, password });
+    }
   };
+
+  useEffect(() => {
+    if (isSuccess && !isError) {
+      setInputs(initialState);
+      navigate("/auth/login");
+    }
+  }, [isSuccess, isError, navigate]);
 
   return (
     <div className="mt-6">
@@ -71,8 +84,10 @@ const Register = () => {
                 value={inputs.confirmPassword}
               />
 
-              <Submitbtn text="Sign Up" />
+              <Submitbtn disableBtn={isLoading} text="Sign Up" />
             </form>
+            {error && <Error message={error?.data?.Message} />}
+            {err && <Error message={err} />}
           </div>
           <div className="p-24 mt-12">
             <h2 className=" font-sans text-3xl ">Sing In</h2>

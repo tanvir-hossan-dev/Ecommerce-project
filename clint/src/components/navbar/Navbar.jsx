@@ -4,17 +4,16 @@ import logo from "../../assets/images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { logoutUser } from "../../Redux/features/User/userSlice";
+import { userLoggedOut } from "../../Redux/features/auth/authSlice";
 
 const Navbar = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const handleSignOut = (e) => {
     e.preventDefault();
-    dispatch(logoutUser());
-    localStorage.removeItem("user");
+    dispatch(userLoggedOut());
+    localStorage.removeItem("auth");
     navigate("/auth/login");
   };
 
@@ -74,7 +73,7 @@ const Navbar = () => {
                   Contact
                 </a>
               </li>
-              {user.user ? (
+              {user ? (
                 <Menu as="div" className="relative z-10 inline-block text-left" style={{ marginTop: "-10px" }}>
                   <div>
                     <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none">

@@ -4,7 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import Submitbtn from "./Submitbtn";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginUser } from "../Redux/features/User/userSlice";
+import { useLoginMutation } from "../Redux/features/auth/authApi";
+import { useEffect } from "react";
+import Error from "../components/Error/Error";
 
 const initialState = {
   email: "",
@@ -12,11 +14,9 @@ const initialState = {
 };
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const { user, error, isSuccess, isError } = useSelector((state) => state.user);
+  const [login, { isSuccess, error, isError }] = useLoginMutation();
   const [inputs, setInputs] = useState(initialState);
   const navigate = useNavigate();
-  console.log(error);
 
   const handleOnChange = (e) => {
     setInputs({
@@ -28,10 +28,16 @@ const Login = () => {
   const handleSubmit = (e) => {
     const { email, password } = inputs;
     e.preventDefault();
-    setInputs(initialState);
-    dispatch(LoginUser({ email, password }));
-    if (isSuccess && !isError) navigate("/");
+
+    login({ email, password });
   };
+
+  useEffect(() => {
+    if (isSuccess && !isError) {
+      setInputs(initialState);
+      navigate("/");
+    }
+  }, [navigate, isSuccess, isError]);
 
   return (
     <div className="mt-6">
@@ -66,6 +72,7 @@ const Login = () => {
 
               <Submitbtn text="Sign In" />
             </form>
+            {isError && <Error message={error?.data?.Message} />}
           </div>
           <div className="p-24 mt-12">
             <h2 className=" font-sans text-3xl ">Create Account</h2>
